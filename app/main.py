@@ -11,6 +11,3 @@ def test():
   now = datetime.now()
   data = list(db.users.find({}))
   return {"time": now, "db": data}
-
-
-
