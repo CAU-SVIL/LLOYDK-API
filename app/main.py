@@ -14,7 +14,7 @@ async def test():
 
 @app.get("/collection/{collection_name}")
 async def test(collection_name):
-  client = MongoClient("localhost", 27017)
+  client = MongoClient("172.19.0.3", 27017)
   db = client.crawling
   now = datetime.now()
   collection = db[collection_name]
