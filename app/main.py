@@ -1,11 +1,34 @@
 from fastapi import FastAPI
 from pymongo import MongoClient
+import requests
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+
+origins = [
+    "http://localhost",
+    "http://172.19.0.4:80",
+]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
-async def test():
+async def dashboard():
+  res = requests.get("http://172.19.0.4:80")
+  return res
+
+
+@app.get("/collections")
+async def getCollectionList():
   client = MongoClient("172.19.0.3", 27017)
   db = client.crawling
   now = datetime.now()
@@ -13,7 +36,7 @@ async def test():
 
 
 @app.get("/collection/{collection_name}")
-async def test(collection_name):
+async def getCollection(collection_name):
   client = MongoClient("172.19.0.3", 27017)
   db = client.crawling
   now = datetime.now()
