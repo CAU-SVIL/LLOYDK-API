@@ -1,15 +1,12 @@
 from fastapi import FastAPI
 from pymongo import MongoClient
-import requests
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-
 origins = [
     "http://localhost",
-    "http://172.19.0.4:80",
 ]
 
 
@@ -22,10 +19,8 @@ app.add_middleware(
 )
 
 @app.get("/")
-async def dashboard():
-  res = requests.get("http://172.19.0.4:80")
-  return res
-
+async def test():
+  return "running"
 
 @app.get("/collections")
 async def getCollectionList():
